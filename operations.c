@@ -1,24 +1,24 @@
-void	sa(t_list *stack_a)
+void	sa(t_list **stack_a)
 {
 	int	i;
 
-	if(!stack_a || !stack_a->next)
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
 		return ;
-	i = *(int *)stack_a->content;
-	*(int *)stack_a->content = *(int *)stack_a->next->content;
-	*(int *)stack_a->next->content = i;
+	i = *(int *)(*stack_a)->content;
+	*(int *)(*stack_a)->content = *(int *)(*stack_a)->next->content;
+	*(int *)(*stack_a)->next->content = i;
 }
-void	sb(t_list *stack_b)
+void	sb(t_list **stack_b)
 {
 	int	i;
 
-	if(!stack_b || !stack_b->next)
+	if (!stack_b || !*stack_b || !(*stack_b)->next)
 		return ;
-	i = *(int *)stack_b->content;
-	*(int *)stack_b->content = *(int *)stack_b->next->content;
-	*(int *)stack_b->next->content = i;
+	i = *(int *)(*stack_b)->content;
+	*(int *)(*stack_b)->content = *(int *)(*stack_b)->next->content;
+	*(int *)(*stack_b)->next->content = i;
 }
-void	ss(t_list *stack_a, t_list *stack_b)
+void	ss(t_list **stack_a, t_list **stack_b)
 {
 	sa(stack_a);
 	sb(stack_b);
@@ -35,7 +35,7 @@ void	pa(t_list **stack_a, t_list **stack_b)
 	moving_node->next = *stack_a;
 	*stack_a = moving_node;
 }
-void	pb(char *stack_a, char *stack_b)
+void	pb(t_list **stack_a, t_list **stack_b)
 {
 	t_list	*moving_node;
 
@@ -49,72 +49,77 @@ void	pb(char *stack_a, char *stack_b)
 //-------------------------------------------
 void    ra(t_list **stack_a)
 {
-	t_list *temp;
+	t_list *first_node;
+	t_list *last_node;
 
-	*temp->content = *stack_a->content;
-    while(stack_a->next != NULL)
-    {
-    	stack_a = stack_a->next;
-    }
-    stack_a->next->content = temp->content;
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return;
+	first_node = *stack_a;
+	last_node = *stack_a;
+	while (last_node->next)
+		last_node = last_node->next;
+	*stack_a = first_node->next;
+	first_node->next = NULL;
+	last_node->next = first_node;
 }
-void	rb(char *stack_b)
+void	rb(t_list **stack_b)
 {
-	int    i;
-    char    temp;
+	t_list *first_node;
+	t_list *last_node;
 
-    temp = stack_b[0];
-    i = 0;
-    while (stack_b[i] != '\0')
-    {
-        stack_b[i] = stack_b[i+1];
-        i++;
-    }
-    stack_b[i-1] = temp;
+	if (!stack_b || !*stack_b || !(*stack_b)->next)
+		return;
+	first_node = *stack_b;
+	last_node = *stack_b;
+	while (last_node->next)
+		last_node = last_node->next;
+	*stack_b = first_node->next;
+	first_node->next = NULL;
+	last_node->next = first_node;
 }
-void	rr(int *stack_a, int *stack_b)
+void	rr(t_list **stack_a, t_list **stack_b)
 {
 	ra(stack_a);
 	rb(stack_b);
 }
 //-------------------------------------------
-void    rra(char *stack_a)
+void rra(t_list **stack_a)
 {
-    int    i;
-    char    temp;
+	t_list *prev;
+	t_list *last;
 
-    i = 0;
-    while (stack_a[i] != '\0')
-    {
-        i++;
-    }
-    temp = stack_a[i-1];
-    while (i > 0)
-    {
-      stack_a[i] = stack_a[i-1];
-      i--;
-    }
-    stack_a[i] = temp;
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return;
+	prev = NULL;
+	last = *stack_a;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *stack_a;
+	*stack_a = last;
 }
-void    rrb(char *stack_b)
+void	rrb(t_list **stack_b)
 {
-    int    i;
-    char    temp;
+	t_list *prev;
+	t_list *last;
 
-    i = 0;
-    while (stack_b[i] != '\0')
-    {
-        i++;
-    }
-    temp = stack_b[i-1];
-    while (i > 0)
-    {
-      stack_b[i] = stack_b[i-1];
-      i--;
-    }
-    stack_b[i] = temp;
+	if (!stack_b || !*stack_b || !(*stack_b)->next)
+		return;
+	prev = NULL;
+	last = *stack_b;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *stack_b;
+	*stack_b = last;
 }
-void	rrr(char *stack_a, char *stack_b)
+void	rrr(t_list **stack_a, t_list **stack_b)
 {
 	rra(stack_a);
 	rrb(stack_b);
