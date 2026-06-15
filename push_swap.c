@@ -92,13 +92,40 @@ int stack_a_is_correct(char *stack_a)
   return (0);
 }
 
+int calculate_disorder(int *stack_a, int length)
+{
+  int mistakes;
+  int total_pairs;
+  int i;
+  int j;
+
+  i = 0;
+  mistakes = 0;
+  total_pairs = 0;
+
+  while (i < length)
+  {
+    j = i + 1;
+    while (j < length)
+    {
+      total_pairs++;
+      if (stack_a[i] > stack_a[j])
+        mistakes++;
+      j++;
+    }
+    i++;
+  }
+  return ((mistakes * 100)/total_pairs);
+}
+
 void  push_swap(int *stack_a, int length)
 {
   int *stack_b;
+  int disorder_index;
 
-  if(search_duplicates(stack_a, length) == 1)
+  if(search_duplicates(stack_a, length) == 1 || length < 2)
     return ;
-  
+  disorder_index = calculate_disorder(stack_a, length);
 }
 
 int *transform_argv(char *argv, int length)
