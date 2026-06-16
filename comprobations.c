@@ -53,26 +53,32 @@ int stack_a_is_correct(char *stack_a)
   return (0);
 }
 
-int *transform_argv(char *argv, int length)
+int *transform_argv(char **argv, int *length)
 {
   int *stack_a;
   int i;
+  int j;
 
-  if (!argv || length < 0)
+  if (!argv || (*length) < 0)
     return (0);
-  stack_a = malloc(sizeof(int) * length);
+  i = 1;
+  j = 0;
+  while(i < (*length) && argv[i][0] == '-' && (argv[i][1] > '9' || argv[i][1] < '0'))
+    	i++;
+  *length -= i;
+  stack_a = malloc(sizeof(int) * (*length));
   if (!stack_a)
     return (0);
-  i = 0;
-  while (i < length)
+  while (j < (*length))
   {
-    if(stack_a_is_correct(argv[i + 1]) == 1)
+    if(stack_a_is_correct(argv[i]) == 1)
     {
       free (stack_a);
       return (0);
     }
-    stack_a[i] = ft_atoi(argv[i + 1]);
+    stack_a[j] = ft_atoi(argv[i]);
     i++;
+    j++;
   }
   return (stack_a);
 }
