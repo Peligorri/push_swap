@@ -36,9 +36,11 @@ int stack_a_is_correct(char *stack_a)
   int i;
   int len;
 
-  i = 1;
+  i = 0;
   len = ft_strlen(stack_a);
-  while (stack_a[i] == ' ')
+  while (stack_a[i] == ' ' && stack_a[i + 1] != '\0')
+    i++;
+  if ((stack_a[i] == '-' || stack_a[i] == '+') && (stack_a[i + 1] >= '0' && stack_a[i + 1] <= '9'))
     i++;
   if(stack_a[i] != '-' && stack_a[i] != '+' && (stack_a[i] < '0' || stack_a[i] > '9'))
       return (1);
