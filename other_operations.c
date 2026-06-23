@@ -10,14 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
-void rra(t_list **stack_a)
+void	rra(t_list **stack_a)
 {
-	t_list *prev;
-	t_list *last;
+	t_list	*prev;
+	t_list	*last;
 
 	if (!stack_a || !*stack_a || !(*stack_a)->next)
-		return;
+		return ;
 	prev = NULL;
 	last = *stack_a;
 	while (last->next)
@@ -32,11 +31,11 @@ void rra(t_list **stack_a)
 
 void	rrb(t_list **stack_b)
 {
-	t_list *prev;
-	t_list *last;
+	t_list	*prev;
+	t_list	*last;
 
 	if (!stack_b || !*stack_b || !(*stack_b)->next)
-		return;
+		return ;
 	prev = NULL;
 	last = *stack_b;
 	while (last->next)
