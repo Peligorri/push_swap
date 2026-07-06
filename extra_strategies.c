@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   other_operations.c                                 :+:      :+:    :+:   */
+/*   extra_strategies.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,59 +11,59 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	rra(t_list **stack_a)
+int	find_position(t_list *stack, int value)
 {
-	t_list	*prev;
-	t_list	*last;
+	int	pos;
 
-	if (!stack_a || !*stack_a || !(*stack_a)->next)
-		return ;
-	prev = NULL;
-	last = *stack_a;
-	while (last->next)
+	pos = 0;
+	while (stack)
 	{
-		prev = last;
-		last = last->next;
+		if (stack->content == value)
+			return (pos);
+		stack = stack->next;
+		pos++;
 	}
-	prev->next = NULL;
-	last->next = *stack_a;
-	*stack_a = last;
+	return (0);
 }
 
-void	rrb(t_list **stack_b)
+int	find_min_value(t_list *stack)
 {
-	t_list	*prev;
-	t_list	*last;
+	int	min;
 
-	if (!stack_b || !*stack_b || !(*stack_b)->next)
-		return ;
-	prev = NULL;
-	last = *stack_b;
-	while (last->next)
+	min = stack->content;
+	while (stack)
 	{
-		prev = last;
-		last = last->next;
+		if (stack->content < min)
+			min = stack->content;
+		stack = stack->next;
 	}
-	prev->next = NULL;
-	last->next = *stack_b;
-	*stack_b = last;
+	return (min);
 }
 
-void	rrr(t_list **stack_a, t_list **stack_b)
+int	find_max_value(t_list *stack)
 {
-	rra(stack_a);
-	rrb(stack_b);
+	int	max;
+
+	max = stack->content;
+	while (stack)
+	{
+		if (stack->content > max)
+			max = stack->content;
+		stack = stack->next;
+	}
+	return (max);
 }
 
-void	ft_putstr_fd(char *str, int fd)
+int	chunk_size(int length)
 {
-	if (!str)
-		return ;
-	write(fd, str, ft_strlen(str));
-}
+	int	size;
 
-void	error_output(void)
-{
-	write(2, "Error\n", 6);
-	exit(1);
+	size = 1;
+	while (size * size < length)
+		size++;
+	if (length > 100)
+		size = size * 2;
+	else
+		size = size + (size / 2);
+	return (size);
 }

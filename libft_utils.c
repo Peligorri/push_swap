@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "push_swap.h"
+#include <stddef.h>
+
 size_t	ft_strlen(const char *s)
 {
 	size_t	num;
@@ -25,7 +28,7 @@ size_t	ft_strlen(const char *s)
 	return (num);
 }
 
-static int	ft_putnum(const char *str, int num, int i, int neg)
+static long	ft_putnum(const char *str, long num, int i, int neg)
 {
 	while (str[i] >= '0' && str[i] <= '9')
 	{
@@ -39,9 +42,9 @@ static int	ft_putnum(const char *str, int num, int i, int neg)
 
 int	ft_atoi(const char *nptr)
 {
-	int	i;
-	int	num;
-	int	neg;
+	int		i;
+	long	num;
+	int		neg;
 
 	i = 0;
 	num = 0;
@@ -58,5 +61,39 @@ int	ft_atoi(const char *nptr)
 	if (nptr[i] < '0' || nptr[i] > '9')
 		return (0);
 	num = ft_putnum(nptr, num, i, neg);
-	return (num);
+	return ((int)num);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && *s2 && *s1 == *s2)
+	{
+		s1++;
+		s2++;
+	}
+	return ((unsigned char)*s1 - (unsigned char)*s2);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	long	num;
+	char	c;
+
+	num = n;
+	if (num < 0)
+	{
+		write(fd, "-", 1);
+		num = -num;
+	}
+	if (num < 10)
+	{
+		c = num + '0';
+		write(fd, &c, 1);
+	}
+	else
+	{
+		ft_putnbr_fd(num / 10, fd);
+		c = (num % 10) + '0';
+		write(fd, &c, 1);
+	}
 }

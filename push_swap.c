@@ -10,53 +10,160 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	calculate_disorder(int *stack_a, int length)
-{
-	int	mistakes;
-	int	total_pairs;
-	int	i;
-	int	j;
+#include "push_swap.h"
 
-	i = 0;
-	mistakes = 0;
-	total_pairs = 0;
-	while (i < length)
+static void	rotate_min_to_top(t_list **stack_a, int length,
+		t_op_node **operations)
+{
+	int	min_pos;
+	int	rotations;
+
+	min_pos = find_min_position(*stack_a);
+	if (min_pos <= length / 2)
 	{
-		j = i + 1;
-		while (j < length)
+		while (min_pos-- > 0)
 		{
-			total_pairs++;
-			if (stack_a[i] > stack_a[j])
-				mistakes++;
-			j++;
+			ra(stack_a);
+			record_operation(operations, "ra");
 		}
-		i++;
 	}
-	return ((mistakes * 100) / total_pairs);
+	else
+	{
+		rotations = length - min_pos;
+		while (rotations-- > 0)
+		{
+			rra(stack_a);
+			record_operation(operations, "rra");
+		}
+	}
 }
 
-void	push_swap(int *stack_a, int length)
+static void	sort_four_five(t_list **stack_a, t_list **stack_b, int length,
+		t_op_node **operations)
 {
-	int	*stack_b;
-	int	disorder_index;
+	int	current_len;
 
-	if (search_duplicates(stack_a, length) == 1 || length < 2)
-		return ;
-	disorder_index = calculate_disorder(stack_a, length);
+	current_len = length;
+	while (current_len > 3)
+	{
+		rotate_min_to_top(stack_a, current_len, operations);
+		pb(stack_a, stack_b);
+		record_operation(operations, "pb");
+		current_len--;
+	}
+	if (!is_sorted(*stack_a))
+		sort_three(stack_a, operations);
+	while (*stack_b)
+	{
+		pa(stack_a, stack_b);
+		record_operation(operations, "pa");
+	}
+}
+
+static int	normalize_values(int *array, t_list *stack, int length)
+{
+	t_list	*current;
+	int		*copy;
+	int		i;
+	int		j;
+	int		rank;
+
+	copy = malloc(sizeof(int) * length);
+	if (!copy)
+		return (0);
+	i = 0;
+	while (i < length)
+	{
+		copy[i] = array[i];
+		i++;
+	}
+	current = stack;
+	i = 0;
+	while (i < length)
+	{
+		rank = 0;
+		j = 0;
+		while (j < length)
+		{
+			if (copy[j] < current->content)
+				rank++;
+			j++;
+		}
+		array[i] = rank;
+		current->content = rank;
+		current = current->next;
+		i++;
+	}
+	free(copy);
+	return (1);
+}
+
+static void	run_strategy(t_flags flags, t_list **stack_a, t_list **stack_b,
+		int *array_a, int array_len, t_op_node **operations)
+{
+	if (flags.strategy == SIMPLE)
+		simple_sort(stack_a, stack_b, operations);
+	else if (flags.strategy == MEDIUM)
+		medium_sort(stack_a, stack_b, operations);
+	else if (flags.strategy == COMPLEX)
+		complex_sort(stack_a, stack_b, array_a, array_len, operations);
+	else
+		adaptive_sort(stack_a, stack_b, array_a, array_len, operations);
 }
 
 int	main(int argc, char *argv[])
 {
-	int		*array_a;
-	t_list	*stack_a;
+	t_flags		flags;
+	t_list		*stack_a;
+	t_list		*stack_b;
+	int			*array_a;
+	int			array_len;
+	int			start_index;
+	t_op_node	*operations;
 
-	stack_a = malloc(sizeof(t_list));
-	if (!stack_a)
-		return (NULL);
-	array_a = transform_argv(argv, (argc - 1));
+	if (argc < 2)
+		return (0);
+	flags = parse_flags(argc, argv, &start_index);
+	array_len = argc - start_index;
+	if (array_len < 1)
+		return (0);
+	array_a = transform_argv(&argv[start_index], &array_len);
 	if (!array_a)
-		return (1);
-	ft_array_to_list(array_a, stack_a, (argc - 1));
-	push_swap(stack_a, (argc - 1));
+		error_output();
+	if (search_duplicates(array_a, array_len) == 1)
+	{
+		free(array_a);
+		error_output();
+	}
+	stack_a = NULL;
+	stack_b = NULL;
+	operations = NULL;
+	ft_array_to_list(array_a, &stack_a, array_len);
+	if (!is_sorted(stack_a))
+	{
+		if (array_len == 2)
+			sort_two(&stack_a, &operations);
+		else if (array_len == 3)
+			sort_three(&stack_a, &operations);
+		else if (array_len <= 5)
+			sort_four_five(&stack_a, &stack_b, array_len, &operations);
+		else
+		{
+			if (!normalize_values(array_a, stack_a, array_len))
+			{
+				free_list(stack_a);
+				free(array_a);
+				error_output();
+			}
+			run_strategy(flags, &stack_a, &stack_b, array_a, array_len,
+				&operations);
+		}
+	}
+	print_operations(operations);
+	benchmark_output(array_a, array_len, flags, operations);
+	free_list(stack_a);
+	free_list(stack_b);
+	free_operations(operations);
+	free(array_a);
 	return (0);
 }
