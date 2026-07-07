@@ -99,16 +99,16 @@ static int	normalize_values(int *array, t_list *stack, int length)
 }
 
 static void	run_strategy(t_flags flags, t_list **stack_a, t_list **stack_b,
-		int *array_a, int array_len, t_op_node **operations)
+		int *array_a, t_op_node **operations)
 {
 	if (flags.strategy == SIMPLE)
 		simple_sort(stack_a, stack_b, operations);
 	else if (flags.strategy == MEDIUM)
 		medium_sort(stack_a, stack_b, operations);
 	else if (flags.strategy == COMPLEX)
-		complex_sort(stack_a, stack_b, array_a, array_len, operations);
+		complex_sort(stack_a, stack_b, array_a, operations);
 	else
-		adaptive_sort(stack_a, stack_b, array_a, array_len, operations);
+		adaptive_sort(stack_a, stack_b, array_a, operations);
 }
 
 int	main(int argc, char *argv[])
@@ -155,7 +155,7 @@ int	main(int argc, char *argv[])
 				free(array_a);
 				error_output();
 			}
-			run_strategy(flags, &stack_a, &stack_b, array_a, array_len,
+			run_strategy(flags, &stack_a, &stack_b, array_a,
 				&operations);
 		}
 	}

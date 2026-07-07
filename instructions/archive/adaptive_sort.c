@@ -42,9 +42,12 @@ double	calculate_disorder_percentage(int *array, int length)
 }
 
 void	adaptive_sort(t_list **stack_a, t_list **stack_b,
-		int *array, int length, t_op_node **ops_head)
+		int *array, t_op_node **ops_head)
 {
-	if (!stack_a || !stack_b || !array || length < 2)
+	int	stack_len;
+
+	stack_len = stack_length(*stack_a);
+	if (!stack_a || !stack_b || !array || stack_len < 2)
 		return ;
-	complex_sort(stack_a, stack_b, array, length, ops_head);
+	complex_sort(stack_a, stack_b, array, stack_len, ops_head);
 }

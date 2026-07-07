@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   strategies.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
+/*   By: jangonza <jangonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:09:40 by jangonza          #+#    #+#             */
-/*   Updated: 2026/06/16 13:09:43 by jangonza         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:25:02 by jangonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "push_swap.h"
 
 static void	rotate_a_to_position(t_list **stack_a, int pos,
@@ -126,13 +127,15 @@ void	medium_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 }
 
 void	adaptive_sort(t_list **stack_a, t_list **stack_b, int *array,
-		int length, t_op_node **ops_head)
+		t_op_node **ops_head)
 {
 	double	disorder;
+	int		stack_len;
 
-	disorder = calculate_disorder_percentage(array, length);
+	stack_len = stack_length(*stack_a);
+	disorder = calculate_disorder_percentage(array, stack_len);
 	if (disorder < 0.5)
 		medium_sort(stack_a, stack_b, ops_head);
 	else
-		complex_sort(stack_a, stack_b, array, length, ops_head);
+		complex_sort(stack_a, stack_b, array, ops_head);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
+/*   By: jangonza <jangonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/06/16 13:09:40 by jangonza          #+#    #+#             */
-/*   Updated: 2026/06/16 13:09:43 by jangonza         ###   ########.fr       */
+/*   Updated: 2026/07/07 12:17:32 by jangonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef PUSH_SWAP_H
@@ -58,10 +58,10 @@ void		simple_sort(t_list **stack_a, t_list **stack_b,
 void		medium_sort(t_list **stack_a, t_list **stack_b,
 				t_op_node **ops_head);
 void		complex_sort(t_list **stack_a, t_list **stack_b, int *array,
-				int length, t_op_node **ops_head);
+				t_op_node **ops_head);
 double		calculate_disorder_percentage(int *array, int length);
 void		adaptive_sort(t_list **stack_a, t_list **stack_b, int *array,
-				int length, t_op_node **ops_head);
+				t_op_node **ops_head);
 void		benchmark_output(int *array, int length, t_flags flags,
 				t_op_node *ops);
 void		sa(t_list **stack_a);

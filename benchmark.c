@@ -59,15 +59,8 @@ static void	print_percent(double value)
 	write(2, "%", 1);
 }
 
-void	benchmark_output(int *array, int length, t_flags flags, t_op_node *ops)
+static void	extra_benchmark(t_flags flags, t_op_node *ops)
 {
-	double	disorder;
-
-	if (flags.bench == 0)
-		return ;
-	disorder = calculate_disorder_percentage(array, length);
-	ft_putstr_fd("\n=== BENCHMARK ===\nDisorder: ", 2);
-	print_percent(disorder);
 	ft_putstr_fd("\nStrategy: ", 2);
 	ft_putstr_fd(strategy_name(flags.strategy), 2);
 	ft_putstr_fd(" (", 2);
@@ -91,6 +84,18 @@ void	benchmark_output(int *array, int length, t_flags flags, t_op_node *ops)
 	ft_putstr_fd(" rr: ", 2);
 	ft_putnbr_fd(count_operations(ops, "rr"), 2);
 	ft_putstr_fd("\nrra: ", 2);
+}
+
+void	benchmark_output(int *array, int length, t_flags flags, t_op_node *ops)
+{
+	double	disorder;
+
+	if (flags.bench == 0)
+		return ;
+	disorder = calculate_disorder_percentage(array, length);
+	ft_putstr_fd("\n=== BENCHMARK ===\nDisorder: ", 2);
+	print_percent(disorder);
+	extra_benchmark(flags, ops);
 	ft_putnbr_fd(count_operations(ops, "rra"), 2);
 	ft_putstr_fd(" rrb: ", 2);
 	ft_putnbr_fd(count_operations(ops, "rrb"), 2);

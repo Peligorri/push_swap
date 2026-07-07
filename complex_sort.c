@@ -83,47 +83,61 @@ static void	rotate_b_to_max(t_list **stack_b, t_op_node **ops_head)
 	}
 }
 
-void	complex_sort(t_list **stack_a, t_list **stack_b,
-		int *array, int length, t_op_node **ops_head)
+static void	pass_sb(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 {
-	int	index;
-	int	window;
-
-	if (!stack_a || !stack_b || !array || length < 2)
-		return ;
-	index = 0;
-	window = (sqrt_approx(length) * 13) / 10;
-	if (window < 1)
-		window = 1;
-	while (*stack_a)
-	{
-		if ((*stack_a)->content <= index)
-		{
-			pb(stack_a, stack_b);
-			record_operation(ops_head, "pb");
-			if (*stack_b && (*stack_b)->next)
-			{
-				rb(stack_b);
-				record_operation(ops_head, "rb");
-			}
-			index++;
-		}
-		else if ((*stack_a)->content <= index + window)
-		{
-			pb(stack_a, stack_b);
-			record_operation(ops_head, "pb");
-			index++;
-		}
-		else
-		{
-			ra(stack_a);
-			record_operation(ops_head, "ra");
-		}
-	}
 	while (*stack_b)
 	{
 		rotate_b_to_max(stack_b, ops_head);
 		pa(stack_a, stack_b);
 		record_operation(ops_head, "pa");
 	}
+}
+
+static void	extra_complex_sort(t_list **stack_a, t_list **stack_b,
+		t_op_node **ops_head, int window)
+{
+	int	index;
+
+	index = 0;
+	if ((*stack_a)->content <= index)
+	{
+		pb(stack_a, stack_b);
+		record_operation(ops_head, "pb");
+		if (*stack_b && (*stack_b)->next)
+		{
+			rb(stack_b);
+			record_operation(ops_head, "rb");
+		}
+		index++;
+	}
+	else if ((*stack_a)->content <= index + window)
+	{
+		pb(stack_a, stack_b);
+		record_operation(ops_head, "pb");
+		index++;
+	}
+	else
+	{
+		ra(stack_a);
+		record_operation(ops_head, "ra");
+	}
+}
+
+void	complex_sort(t_list **stack_a, t_list **stack_b,
+		int *array, t_op_node **ops_head)
+{
+	int	window;
+	int	stack_len;
+
+	stack_len = stack_length(*stack_a);
+	if (!stack_a || !stack_b || !array || stack_len < 2)
+		return ;
+	window = (sqrt_approx(stack_len) * 13) / 10;
+	if (window < 1)
+		window = 1;
+	while (*stack_a)
+	{
+		extra_complex_sort(stack_a, stack_b, ops_head, window);
+	}
+	pass_sb(stack_a, stack_b, ops_head);
 }
