@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	sa(t_list **stack_a)
+void	sa(t_list **stack_a, t_op_node **operations)
 {
 	int	i;
 
@@ -21,9 +21,10 @@ void	sa(t_list **stack_a)
 	i = (*stack_a)->content;
 	(*stack_a)->content = (*stack_a)->next->content;
 	(*stack_a)->next->content = i;
+	record_operation(operations, "sa");
 }
 
-void	sb(t_list **stack_b)
+void	sb(t_list **stack_b, t_op_node **operations)
 {
 	int	i;
 
@@ -32,15 +33,27 @@ void	sb(t_list **stack_b)
 	i = (*stack_b)->content;
 	(*stack_b)->content = (*stack_b)->next->content;
 	(*stack_b)->next->content = i;
+	record_operation(operations, "sb");
 }
 
-void	ss(t_list **stack_a, t_list **stack_b)
+void	ss(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 {
-	sa(stack_a);
-	sb(stack_b);
+	int	i;
+
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return ;
+	i = (*stack_a)->content;
+	(*stack_a)->content = (*stack_a)->next->content;
+	(*stack_a)->next->content = i;
+	if (!stack_b || !*stack_b || !(*stack_b)->next)
+		return ;
+	i = (*stack_b)->content;
+	(*stack_b)->content = (*stack_b)->next->content;
+	(*stack_b)->next->content = i;
+	record_operation(operations, "ss");
 }
 
-void	pa(t_list **stack_a, t_list **stack_b)
+void	pa(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 {
 	t_list	*moving_node;
 
@@ -50,9 +63,10 @@ void	pa(t_list **stack_a, t_list **stack_b)
 	*stack_b = (*stack_b)->next;
 	moving_node->next = *stack_a;
 	*stack_a = moving_node;
+	record_operation(operations, "pa");
 }
 
-void	pb(t_list **stack_a, t_list **stack_b)
+void	pb(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 {
 	t_list	*moving_node;
 
@@ -62,4 +76,5 @@ void	pb(t_list **stack_a, t_list **stack_b)
 	*stack_a = (*stack_a)->next;
 	moving_node->next = *stack_b;
 	*stack_b = moving_node;
+	record_operation(operations, "pb");
 }

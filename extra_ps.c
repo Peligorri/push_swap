@@ -39,8 +39,7 @@ void	sort_two(t_list **stack_a, t_op_node **operations)
 {
 	if ((*stack_a)->content > (*stack_a)->next->content)
 	{
-		sa(stack_a);
-		record_operation(operations, "sa");
+		sa(stack_a, operations);
 	}
 }
 
@@ -54,34 +53,21 @@ void	sort_three(t_list **stack_a, t_op_node **operations)
 	second = (*stack_a)->next->content;
 	third = (*stack_a)->next->next->content;
 	if (first > second && second < third && first < third)
-	{
-		sa(stack_a);
-		record_operation(operations, "sa");
-	}
+		sa(stack_a, operations);
 	else if (first > second && second > third)
 	{
-		sa(stack_a);
-		record_operation(operations, "sa");
-		rra(stack_a);
-		record_operation(operations, "rra");
+		sa(stack_a, operations);
+		rra(stack_a, operations);
 	}
 	else if (first > second && second < third && first > third)
-	{
-		ra(stack_a);
-		record_operation(operations, "ra");
-	}
+		ra(stack_a, operations);
 	else if (first < second && second > third && first < third)
 	{
-		sa(stack_a);
-		record_operation(operations, "sa");
-		ra(stack_a);
-		record_operation(operations, "ra");
+		sa(stack_a, operations);
+		ra(stack_a, operations);
 	}
 	else if (first < second && second > third && first > third)
-	{
-		rra(stack_a);
-		record_operation(operations, "rra");
-	}
+		rra(stack_a, operations);
 }
 
 int	find_min_position(t_list *stack)

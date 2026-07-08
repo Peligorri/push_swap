@@ -64,17 +64,17 @@ void		adaptive_sort(t_list **stack_a, t_list **stack_b, int *array,
 				t_op_node **ops_head);
 void		benchmark_output(int *array, int length, t_flags flags,
 				t_op_node *ops);
-void		sa(t_list **stack_a);
-void		sb(t_list **stack_b);
-void		ss(t_list **stack_a, t_list **stack_b);
-void		pa(t_list **stack_a, t_list **stack_b);
-void		pb(t_list **stack_a, t_list **stack_b);
-void		ra(t_list **stack_a);
-void		rb(t_list **stack_b);
-void		rr(t_list **stack_a, t_list **stack_b);
-void		rra(t_list **stack_a);
-void		rrb(t_list **stack_b);
-void		rrr(t_list **stack_a, t_list **stack_b);
+void		sa(t_list **stack_a, t_op_node **operations);
+void		sb(t_list **stack_b, t_op_node **operations);
+void		ss(t_list **stack_a, t_list **stack_b, t_op_node **operations);
+void		pa(t_list **stack_a, t_list **stack_b, t_op_node **operations);
+void		pb(t_list **stack_a, t_list **stack_b, t_op_node **operations);
+void		ra(t_list **stack_a, t_op_node **operations);
+void		rb(t_list **stack_b, t_op_node **operations);
+void		rr(t_list **stack_a, t_list **stack_b, t_op_node **operations);
+void		rra(t_list **stack_a, t_op_node **operations);
+void		rrb(t_list **stack_b, t_op_node **operations);
+void		rrr(t_list **stack_a, t_list **stack_b, t_op_node **operations);
 
 t_op_node	*create_op_node(char *op_name);
 void		record_operation(t_op_node **ops_head, char *op_name);

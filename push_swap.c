@@ -22,19 +22,13 @@ static void	rotate_min_to_top(t_list **stack_a, int length,
 	if (min_pos <= length / 2)
 	{
 		while (min_pos-- > 0)
-		{
-			ra(stack_a);
-			record_operation(operations, "ra");
-		}
+			ra(stack_a, operations);
 	}
 	else
 	{
 		rotations = length - min_pos;
 		while (rotations-- > 0)
-		{
-			rra(stack_a);
-			record_operation(operations, "rra");
-		}
+			rra(stack_a, operations);
 	}
 }
 
@@ -47,17 +41,13 @@ static void	sort_four_five(t_list **stack_a, t_list **stack_b, int length,
 	while (current_len > 3)
 	{
 		rotate_min_to_top(stack_a, current_len, operations);
-		pb(stack_a, stack_b);
-		record_operation(operations, "pb");
+		pb(stack_a, stack_b, operations);
 		current_len--;
 	}
 	if (!is_sorted(*stack_a))
 		sort_three(stack_a, operations);
 	while (*stack_b)
-	{
-		pa(stack_a, stack_b);
-		record_operation(operations, "pa");
-	}
+		pa(stack_a, stack_b, operations);
 }
 
 static int	normalize_values(int *array, t_list *stack, int length)

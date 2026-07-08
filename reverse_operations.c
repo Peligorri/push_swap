@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	ra(t_list **stack_a)
+void	ra(t_list **stack_a, t_op_node **operations)
 {
 	t_list	*first_node;
 	t_list	*last_node;
@@ -26,9 +26,10 @@ void	ra(t_list **stack_a)
 	*stack_a = first_node->next;
 	first_node->next = NULL;
 	last_node->next = first_node;
+	record_operation(operations, "ra");
 }
 
-void	rb(t_list **stack_b)
+void	rb(t_list **stack_b, t_op_node **operations)
 {
 	t_list	*first_node;
 	t_list	*last_node;
@@ -42,12 +43,33 @@ void	rb(t_list **stack_b)
 	*stack_b = first_node->next;
 	first_node->next = NULL;
 	last_node->next = first_node;
+	record_operation(operations, "rb");
 }
 
-void	rr(t_list **stack_a, t_list **stack_b)
+void	rr(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 {
-	ra(stack_a);
-	rb(stack_b);
+	t_list	*first_node;
+	t_list	*last_node;
+
+	if (!stack_a || !*stack_a || !(*stack_a)->next)
+		return ;
+	first_node = *stack_a;
+	last_node = *stack_a;
+	while (last_node->next)
+		last_node = last_node->next;
+	*stack_a = first_node->next;
+	first_node->next = NULL;
+	last_node->next = first_node;
+	if (!stack_b || !*stack_b || !(*stack_b)->next)
+		return ;
+	first_node = *stack_b;
+	last_node = *stack_b;
+	while (last_node->next)
+		last_node = last_node->next;
+	*stack_b = first_node->next;
+	first_node->next = NULL;
+	last_node->next = first_node;
+	record_operation(operations, "rr");
 }
 
 double	calculate_disorder_percentage(int *array, int length)

@@ -12,6 +12,23 @@
 
 #include "push_swap.h"
 
+static int	search_symbol(const char *str, int *neg)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-')
+	{
+		*neg = 1;
+		i++;
+	}
+	else if (str[i] == '+')
+		i++;
+	return (i);
+}
+
 int	validate_integer_range(const char *str)
 {
 	long	num;
@@ -21,23 +38,12 @@ int	validate_integer_range(const char *str)
 
 	if (!str)
 		return (0);
-	i = 0;
 	neg = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-')
-	{
-		neg = 1;
-		i++;
-	}
-	else if (str[i] == '+')
-		i++;
+	i = search_symbol(str, &neg);
 	if (str[i] < '0' || str[i] > '9')
 		return (0);
 	num = 0;
-	limit = 2147483647;
-	if (neg == 1)
-		limit = 2147483648;
+	limit = 2147483647 + neg;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		num = (num * 10) + (str[i] - '0');
@@ -45,10 +51,6 @@ int	validate_integer_range(const char *str)
 			return (0);
 		i++;
 	}
-	if (neg == 1)
-		num = -num;
-	if (num < -2147483648 || num > 2147483647)
-		return (0);
 	return (1);
 }
 
@@ -116,15 +118,9 @@ int	*transform_argv(char **argv, int *length)
 	while (j < (*length))
 	{
 		if (stack_a_is_correct(argv[i]) == 1)
-		{
-			free (stack_a);
-			return (0);
-		}
+			return (free (stack_a), NULL);
 		if (validate_integer_range(argv[i]) == 0)
-		{
-			free (stack_a);
-			return (0);
-		}
+			return (free (stack_a), NULL);
 		stack_a[j] = ft_atoi(argv[i]);
 		i++;
 		j++;

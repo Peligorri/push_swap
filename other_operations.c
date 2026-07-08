@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-void	rra(t_list **stack_a)
+void	rra(t_list **stack_a, t_op_node **operations)
 {
 	t_list	*prev;
 	t_list	*last;
@@ -28,9 +28,10 @@ void	rra(t_list **stack_a)
 	prev->next = NULL;
 	last->next = *stack_a;
 	*stack_a = last;
+	record_operation(operations, "rra");
 }
 
-void	rrb(t_list **stack_b)
+void	rrb(t_list **stack_b, t_op_node **operations)
 {
 	t_list	*prev;
 	t_list	*last;
@@ -47,12 +48,46 @@ void	rrb(t_list **stack_b)
 	prev->next = NULL;
 	last->next = *stack_b;
 	*stack_b = last;
+	record_operation(operations, "rrb");
 }
 
-void	rrr(t_list **stack_a, t_list **stack_b)
+void	extra_rrr(t_list **stack_b)
 {
-	rra(stack_a);
-	rrb(stack_b);
+	t_list	*prev;
+	t_list	*last;
+
+	prev = NULL;
+	last = *stack_b;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *stack_b;
+	*stack_b = last;
+}
+
+void	rrr(t_list **stack_a, t_list **stack_b, t_op_node **operations)
+{
+	t_list	*prev;
+	t_list	*last;
+
+	if (!stack_a || !*stack_a || !(*stack_a)->next
+		|| !stack_b || !*stack_b || !(*stack_b)->next)
+		return ;
+	prev = NULL;
+	last = *stack_a;
+	while (last->next)
+	{
+		prev = last;
+		last = last->next;
+	}
+	prev->next = NULL;
+	last->next = *stack_a;
+	*stack_a = last;
+	extra_rrr(stack_b);
+	record_operation(operations, "rrr");
 }
 
 void	ft_putstr_fd(char *str, int fd)
