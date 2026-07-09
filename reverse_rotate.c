@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   other_operations.c                                 :+:      :+:    :+:   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/16 13:09:40 by jangonza          #+#    #+#             */
-/*   Updated: 2026/06/16 13:09:43 by jangonza         ###   ########.fr       */
+/*   Created: 2026/06/16 13:08:39 by jangonza          #+#    #+#             */
+/*   Updated: 2026/06/16 13:08:41 by jangonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	rra(t_list **stack_a, t_op_node **operations)
@@ -88,10 +89,4 @@ void	rrr(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 	*stack_a = last;
 	extra_rrr(stack_b);
 	record_operation(operations, "rrr");
-}
-
-void	error_output(void)
-{
-	write(2, "Error\n", 6);
-	exit(1);
 }

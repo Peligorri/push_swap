@@ -114,5 +114,6 @@ void		sort_four_five(t_list **stack_a, t_list **stack_b, int length,
 				t_op_node **operations);
 void		rotate_min_to_top(t_list **stack_a, int length,
 				t_op_node **operations);
+int	search_symbol(const char *str, int *neg);
 
 #endif

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_operations.c                               :+:      :+:    :+:   */
+/*   rotate.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -72,29 +72,40 @@ void	rr(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 	record_operation(operations, "rr");
 }
 
-double	calculate_disorder_percentage(int *array, int length)
+void	rotate_a_to_position(t_list **stack_a, int pos,
+		t_op_node **ops_head)
 {
-	int	mistakes;
-	int	total_pairs;
-	int	i;
-	int	j;
+	int	length;
 
-	if (length < 2)
-		return (0.0);
-	mistakes = 0;
-	total_pairs = 0;
-	i = 0;
-	while (i < length)
+	length = stack_length(*stack_a);
+	if (pos <= length / 2)
 	{
-		j = i + 1;
-		while (j < length)
-		{
-			total_pairs++;
-			if (array[i] > array[j])
-				mistakes++;
-			j++;
-		}
-		i++;
+		while (pos-- > 0)
+			ra(stack_a, ops_head);
 	}
-	return ((double)mistakes / (double)total_pairs);
+	else
+	{
+		pos = length - pos;
+		while (pos-- > 0)
+			rra(stack_a, ops_head);
+	}
+}
+
+void	rotate_b_to_position(t_list **stack_b, int pos,
+		t_op_node **ops_head)
+{
+	int	length;
+
+	length = stack_length(*stack_b);
+	if (pos <= length / 2)
+	{
+		while (pos-- > 0)
+			rb(stack_b, ops_head);
+	}
+	else
+	{
+		pos = length - pos;
+		while (pos-- > 0)
+			rrb(stack_b, ops_head);
+	}
 }

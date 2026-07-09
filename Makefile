@@ -17,21 +17,22 @@ RM				= rm -f
 
 # Source files
 SRCS			= push_swap.c \
-				operations.c \
 				parser.c \
-				comprobations.c \
+				validation.c \
 				libft_utils.c \
+				libft_utils2.c \
+				operation_list.c \
+				operation_utils.c \
+				swap_push.c \
+				rotate.c \
+				reverse_rotate.c \
 				strategies.c \
 				complex_sort.c \
-				benchmark.c \
-				operations_s_p.c \
-				reverse_operations.c \
-				other_operations.c \
-				extra_ps.c \
-				extra_strategies.c \
-				stacks_updates.c \
-				extra_complex_sort.c \
-				extra_functions.c
+				small_sort.c \
+				normalization.c \
+				stack_utils.c \
+				stack_utils2.c \
+				benchmark.c
 
 # Object files
 OBJS			= $(SRCS:.c=.o)

@@ -56,3 +56,56 @@ t_flags	parse_flags(int argc, char **argv, int *start_index)
 	*start_index = i;
 	return (flags);
 }
+
+int	validate_integer_range(const char *str)
+{
+	long	num;
+	int		i;
+	int		neg;
+	long	limit;
+
+	if (!str)
+		return (0);
+	neg = 0;
+	i = search_symbol(str, &neg);
+	if (str[i] < '0' || str[i] > '9')
+		return (0);
+	num = 0;
+	limit = 2147483647 + neg;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = (num * 10) + (str[i] - '0');
+		if (num > limit)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int	*transform_argv(char **argv, int *length)
+{
+	int	*stack_a;
+	int	i;
+	int	j;
+
+	if (!argv || (*length) < 0)
+		return (0);
+	i = 0;
+	j = 0;
+	if (*length < 1)
+		return (0);
+	stack_a = malloc(sizeof(int) * (*length));
+	if (!stack_a)
+		return (0);
+	while (j < (*length))
+	{
+		if (stack_a_is_correct(argv[i]) == 1)
+			return (free (stack_a), NULL);
+		if (validate_integer_range(argv[i]) == 0)
+			return (free (stack_a), NULL);
+		stack_a[j] = ft_atoi(argv[i]);
+		i++;
+		j++;
+	}
+	return (stack_a);
+}

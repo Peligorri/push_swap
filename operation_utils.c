@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_complex_sort.c                               :+:      :+:    :+:   */
+/*   operation_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/20 00:00:00 by jangonza          #+#    #+#             */
-/*   Updated: 2026/06/20 00:00:00 by jangonza         ###   ########.fr       */
+/*   Created: 2026/06/16 13:09:40 by jangonza          #+#    #+#             */
+/*   Updated: 2026/06/16 13:09:43 by jangonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	stack_length(t_list *stack)
+int	total_operations(t_op_node *ops)
 {
-	int		length;
+	int	count;
 
-	length = 0;
-	while (stack)
+	count = 0;
+	while (ops)
 	{
-		length++;
-		stack = stack->next;
+		count++;
+		ops = ops->next;
 	}
-	return (length);
-}
-
-int	sqrt_approx(int n)
-{
-	int	result;
-
-	result = 1;
-	while (result * result < n)
-		result++;
-	return (result);
+	return (count);
 }

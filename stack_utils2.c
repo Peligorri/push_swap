@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stacks_updates.c                                   :+:      :+:    :+:   */
+/*   stack_utils2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,62 +12,42 @@
 
 #include "push_swap.h"
 
-void	rotate_a_to_position(t_list **stack_a, int pos,
-		t_op_node **ops_head)
+int	find_max_value(t_list *stack)
 {
-	int	length;
+	int	max;
 
-	length = stack_length(*stack_a);
-	if (pos <= length / 2)
+	max = stack->content;
+	while (stack)
 	{
-		while (pos-- > 0)
-			ra(stack_a, ops_head);
+		if (stack->content > max)
+			max = stack->content;
+		stack = stack->next;
 	}
+	return (max);
+}
+
+int	chunk_size(int length)
+{
+	int	size;
+
+	size = 1;
+	while (size * size < length)
+		size++;
+	if (length > 100)
+		size = size * 2;
 	else
-	{
-		pos = length - pos;
-		while (pos-- > 0)
-			rra(stack_a, ops_head);
-	}
+		size = size + (size / 2);
+	return (size);
 }
 
-void	rotate_b_to_position(t_list **stack_b, int pos,
-		t_op_node **ops_head)
+int	sqrt_approx(int n)
 {
-	int	length;
+	int	result;
 
-	length = stack_length(*stack_b);
-	if (pos <= length / 2)
-	{
-		while (pos-- > 0)
-			rb(stack_b, ops_head);
-	}
-	else
-	{
-		pos = length - pos;
-		while (pos-- > 0)
-			rrb(stack_b, ops_head);
-	}
-}
-
-int	total_operations(t_op_node *ops)
-{
-	int	count;
-
-	count = 0;
-	while (ops)
-	{
-		count++;
-		ops = ops->next;
-	}
-	return (count);
-}
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	if (!str)
-		return ;
-	write(fd, str, ft_strlen(str));
+	result = 1;
+	while (result * result < n)
+		result++;
+	return (result);
 }
 
 void	ft_array_to_list(int *array_a, t_list **stack_a, int length)
@@ -95,4 +75,31 @@ void	ft_array_to_list(int *array_a, t_list **stack_a, int length)
 		}
 		i++;
 	}
+}
+
+double	calculate_disorder_percentage(int *array, int length)
+{
+	int	mistakes;
+	int	total_pairs;
+	int	i;
+	int	j;
+
+	if (length < 2)
+		return (0.0);
+	mistakes = 0;
+	total_pairs = 0;
+	i = 0;
+	while (i < length)
+	{
+		j = i + 1;
+		while (j < length)
+		{
+			total_pairs++;
+			if (array[i] > array[j])
+				mistakes++;
+			j++;
+		}
+		i++;
+	}
+	return ((double)mistakes / (double)total_pairs);
 }

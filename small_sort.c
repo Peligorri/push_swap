@@ -1,39 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extra_ps.c                                         :+:      :+:    :+:   */
+/*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jangonza <jangonza@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/06/16 13:12:58 by jangonza          #+#    #+#             */
-/*   Updated: 2026/06/16 13:13:01 by jangonza         ###   ########.fr       */
+/*   Created: 2026/06/16 13:09:40 by jangonza          #+#    #+#             */
+/*   Updated: 2026/06/16 13:09:43 by jangonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-void	free_list(t_list *stack)
-{
-	t_list	*temp;
-
-	while (stack)
-	{
-		temp = stack->next;
-		free(stack);
-		stack = temp;
-	}
-}
-
-int	is_sorted(t_list *stack)
-{
-	while (stack && stack->next)
-	{
-		if (stack->content > stack->next->content)
-			return (0);
-		stack = stack->next;
-	}
-	return (1);
-}
 
 void	sort_two(t_list **stack_a, t_op_node **operations)
 {
@@ -68,6 +45,44 @@ void	sort_three(t_list **stack_a, t_op_node **operations)
 	}
 	else if (first < second && second > third && first > third)
 		rra(stack_a, operations);
+}
+
+void	sort_four_five(t_list **stack_a, t_list **stack_b, int length,
+		t_op_node **operations)
+{
+	int	current_len;
+
+	current_len = length;
+	while (current_len > 3)
+	{
+		rotate_min_to_top(stack_a, current_len, operations);
+		pb(stack_a, stack_b, operations);
+		current_len--;
+	}
+	if (!is_sorted(*stack_a))
+		sort_three(stack_a, operations);
+	while (*stack_b)
+		pa(stack_a, stack_b, operations);
+}
+
+void	rotate_min_to_top(t_list **stack_a, int length,
+		t_op_node **operations)
+{
+	int	min_pos;
+	int	rotations;
+
+	min_pos = find_min_position(*stack_a);
+	if (min_pos <= length / 2)
+	{
+		while (min_pos-- > 0)
+			ra(stack_a, operations);
+	}
+	else
+	{
+		rotations = length - min_pos;
+		while (rotations-- > 0)
+			rra(stack_a, operations);
+	}
 }
 
 int	find_min_position(t_list *stack)

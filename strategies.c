@@ -12,6 +12,20 @@
 
 #include "push_swap.h"
 
+void	adaptive_sort(t_list **stack_a, t_list **stack_b, int *array,
+		t_op_node **ops_head)
+{
+	double	disorder;
+	int		stack_len;
+
+	stack_len = stack_length(*stack_a);
+	disorder = calculate_disorder_percentage(array, stack_len);
+	if (disorder < 0.5)
+		medium_sort(stack_a, stack_b, ops_head);
+	else
+		complex_sort(stack_a, stack_b, array, ops_head);
+}
+
 void	simple_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 {
 	int	min;
@@ -28,14 +42,6 @@ void	simple_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 		pa(stack_a, stack_b, ops_head);
 }
 
-static void	extra_ms(t_list **stack_a, t_list **stack_b,
-					t_op_node **ops_head)
-{
-	pb(stack_a, stack_b, ops_head);
-	if (*stack_b && (*stack_b)->next)
-		rb(stack_b, ops_head);
-}
-
 static void	fill_stack_b(t_list **stack_a, t_list **stack_b,
 						t_op_node **ops_head)
 {
@@ -49,6 +55,14 @@ static void	fill_stack_b(t_list **stack_a, t_list **stack_b,
 		rotate_b_to_position(stack_b, pos, ops_head);
 		pa(stack_a, stack_b, ops_head);
 	}
+}
+
+static void	extra_ms(t_list **stack_a, t_list **stack_b,
+					t_op_node **ops_head)
+{
+	pb(stack_a, stack_b, ops_head);
+	if (*stack_b && (*stack_b)->next)
+		rb(stack_b, ops_head);
 }
 
 void	medium_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
@@ -74,18 +88,4 @@ void	medium_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 			ra(stack_a, ops_head);
 	}
 	fill_stack_b(stack_a, stack_b, ops_head);
-}
-
-void	adaptive_sort(t_list **stack_a, t_list **stack_b, int *array,
-		t_op_node **ops_head)
-{
-	double	disorder;
-	int		stack_len;
-
-	stack_len = stack_length(*stack_a);
-	disorder = calculate_disorder_percentage(array, stack_len);
-	if (disorder < 0.5)
-		medium_sort(stack_a, stack_b, ops_head);
-	else
-		complex_sort(stack_a, stack_b, array, ops_head);
 }
