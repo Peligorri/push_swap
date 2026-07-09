@@ -12,29 +12,6 @@
 
 #include "push_swap.h"
 
-int	stack_length(t_list *stack)
-{
-	int		length;
-
-	length = 0;
-	while (stack)
-	{
-		length++;
-		stack = stack->next;
-	}
-	return (length);
-}
-
-static int	sqrt_approx(int n)
-{
-	int	result;
-
-	result = 1;
-	while (result * result < n)
-		result++;
-	return (result);
-}
-
 static int	find_max_position(t_list *stack)
 {
 	int	max;

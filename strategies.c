@@ -12,44 +12,6 @@
 
 #include "push_swap.h"
 
-static void	rotate_a_to_position(t_list **stack_a, int pos,
-		t_op_node **ops_head)
-{
-	int	length;
-
-	length = stack_length(*stack_a);
-	if (pos <= length / 2)
-	{
-		while (pos-- > 0)
-			ra(stack_a, ops_head);
-	}
-	else
-	{
-		pos = length - pos;
-		while (pos-- > 0)
-			rra(stack_a, ops_head);
-	}
-}
-
-static void	rotate_b_to_position(t_list **stack_b, int pos,
-		t_op_node **ops_head)
-{
-	int	length;
-
-	length = stack_length(*stack_b);
-	if (pos <= length / 2)
-	{
-		while (pos-- > 0)
-			rb(stack_b, ops_head);
-	}
-	else
-	{
-		pos = length - pos;
-		while (pos-- > 0)
-			rrb(stack_b, ops_head);
-	}
-}
-
 void	simple_sort(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
 {
 	int	min;

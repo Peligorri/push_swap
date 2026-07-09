@@ -90,13 +90,6 @@ void	rrr(t_list **stack_a, t_list **stack_b, t_op_node **operations)
 	record_operation(operations, "rrr");
 }
 
-void	ft_putstr_fd(char *str, int fd)
-{
-	if (!str)
-		return ;
-	write(fd, str, ft_strlen(str));
-}
-
 void	error_output(void)
 {
 	write(2, "Error\n", 6);

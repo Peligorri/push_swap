@@ -41,6 +41,16 @@ typedef struct s_op_node
 	struct s_op_node	*next;
 }	t_op_node;
 
+typedef struct s_program
+{
+	t_list		*stack_a;
+	t_list		*stack_b;
+	t_op_node	*operations;
+	int			*array_a;
+	int			array_len;
+	int			start_index;
+}	t_program;
+
 int			search_duplicates(int *stack_a, int length);
 int			stack_a_is_correct(char *stack_a);
 int			*transform_argv(char **argv, int *length);
@@ -91,5 +101,18 @@ int			find_position(t_list *stack, int value);
 int			find_min_value(t_list *stack);
 int			find_max_value(t_list *stack);
 int			chunk_size(int length);
+int			total_operations(t_op_node *ops);
+void		rotate_b_to_position(t_list **stack_b, int pos,
+				t_op_node **ops_head);
+void		rotate_a_to_position(t_list **stack_a, int pos,
+				t_op_node **ops_head);
+int			sqrt_approx(int n);
+int			normalize_values(int *array, t_list *stack, int length);
+void		assign_ranks(int *array, int *copy, t_list *stack, int length);
+int			*copy_array(int *array, int length);
+void		sort_four_five(t_list **stack_a, t_list **stack_b, int length,
+				t_op_node **operations);
+void		rotate_min_to_top(t_list **stack_a, int length,
+				t_op_node **operations);
 
 #endif

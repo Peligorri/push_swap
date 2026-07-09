@@ -28,7 +28,10 @@ SRCS			= push_swap.c \
 				reverse_operations.c \
 				other_operations.c \
 				extra_ps.c \
-				extra_strategies.c
+				extra_strategies.c \
+				stacks_updates.c \
+				extra_complex_sort.c \
+				extra_functions.c
 
 # Object files
 OBJS			= $(SRCS:.c=.o)

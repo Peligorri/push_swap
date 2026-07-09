@@ -11,19 +11,6 @@
 /* ************************************************************************** */
 #include "push_swap.h"
 
-static int	total_operations(t_op_node *ops)
-{
-	int	count;
-
-	count = 0;
-	while (ops)
-	{
-		count++;
-		ops = ops->next;
-	}
-	return (count);
-}
-
 static char	*strategy_name(t_strategy strategy)
 {
 	if (strategy == SIMPLE)

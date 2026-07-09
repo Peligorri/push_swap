@@ -127,30 +127,3 @@ int	*transform_argv(char **argv, int *length)
 	}
 	return (stack_a);
 }
-
-void	ft_array_to_list(int *array_a, t_list **stack_a, int length)
-{
-	t_list	*new_node;
-	t_list	*actual_node;
-	int		i;
-
-	i = 0;
-	while (i < length)
-	{
-		new_node = malloc(sizeof(t_list));
-		if (!new_node)
-			return ;
-		new_node->content = array_a[i];
-		new_node->next = NULL;
-		if (!*stack_a)
-			*stack_a = new_node;
-		else
-		{
-			actual_node = *stack_a;
-			while (actual_node->next)
-				actual_node = actual_node->next;
-			actual_node->next = new_node;
-		}
-		i++;
-	}
-}
