@@ -104,8 +104,8 @@ We watched these videos to fully understand what we had to do in this project. T
 We used AI as a tool to help us replace the Molinette and to assist us during the debugging process. We never used it to figure out how to implement parts of the program or to generate code for us. Janire also used it to improve the English in her texts.
 
 ## Contributions
-
-*<jangonza>*
+\
+<jangonza>
 - Designed the initial project structure.
 - Implemented the program entry point and argument validation.
 - Developed the stack manipulation operations.
@@ -113,7 +113,7 @@ We used AI as a tool to help us replace the Molinette and to assist us during th
 - Ensured full compliance with the 42 Norminette.
 - Wrote the initial version of the README.
 \
-*<molariou>*
+<molariou>
 - Implemented the simple sorting algorithm.
 - Implemented the medium sorting algorithm.
 - Implemented the complex sorting algorithm.
