@@ -5,13 +5,11 @@
 push_swap is a sorting algorithm project from the 42 curriculum. The objective is to sort a stack of integers in ascending order using only a limited set of allowed operations while producing the smallest possible number of instructions. \
 
 Our implementation analyzes the input by calculating its disorder percentage. Based on this value, it automatically selects the most appropriate sorting strategy: \
-\
+
 - Simple algorithm for small datasets.
 - Medium algorithm for moderately disordered inputs.
 - Complex algorithm for large or highly disordered datasets.
-\
 To sort the stack, we were only allowed to use the following operations: \
-\
 - **sa (swap a):** Swaps the first two elements at the top of stack_a. Does nothing if there are fewer than two elements.
 - **sb (swap b):** Swaps the first two elements at the top of stack_b. Does nothing if there are fewer than two elements.
 - **ss:** Performs **sa** and **sb** simultaneously.
