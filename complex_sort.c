@@ -12,91 +12,47 @@
 
 #include "push_swap.h"
 
-static int	find_max_position(t_list *stack)
+static int	get_max_bits(int size)
 {
-	int	max;
-	int	max_pos;
-	int	pos;
+	int	max_bits;
 
-	max = stack->content;
-	max_pos = 0;
-	pos = 0;
-	while (stack)
-	{
-		if (stack->content > max)
-		{
-			max = stack->content;
-			max_pos = pos;
-		}
-		stack = stack->next;
-		pos++;
-	}
-	return (max_pos);
+	max_bits = 0;
+	while (((size - 1) >> max_bits) != 0)
+		max_bits++;
+	return (max_bits);
 }
 
-static void	rotate_b_to_max(t_list **stack_b, t_op_node **ops_head)
+static void	process_bit(t_list **stack_a, t_list **stack_b,
+		t_op_node **ops_head, int bit)
 {
-	int	length;
-	int	pos;
+	int	size;
 
-	length = stack_length(*stack_b);
-	pos = find_max_position(*stack_b);
-	if (pos <= length / 2)
+	size = stack_length(*stack_a);
+	while (size--)
 	{
-		while (pos-- > 0)
-			rb(stack_b, ops_head);
+		if ((((*stack_a)->content >> bit) & 1) == 1)
+			ra(stack_a, ops_head);
+		else
+			pb(stack_a, stack_b, ops_head);
 	}
-	else
-	{
-		pos = length - pos;
-		while (pos-- > 0)
-			rrb(stack_b, ops_head);
-	}
-}
-
-static void	pass_sb(t_list **stack_a, t_list **stack_b, t_op_node **ops_head)
-{
 	while (*stack_b)
-	{
-		rotate_b_to_max(stack_b, ops_head);
 		pa(stack_a, stack_b, ops_head);
-	}
-}
-
-static void	extra_complex_sort(t_list **stack_a, t_list **stack_b,
-		t_op_node **ops_head)
-{
-	pb(stack_a, stack_b, ops_head);
-	if (*stack_b && (*stack_b)->next)
-		rb(stack_b, ops_head);
 }
 
 void	complex_sort(t_list **stack_a, t_list **stack_b,
 		int *array, t_op_node **ops_head)
 {
-	int	window;
-	int	index;
+	int	max_bits;
+	int	bit;
 
-	index = 0;
-	if (!stack_a || !stack_b || !array || stack_length(*stack_a) < 2)
+	(void)array;
+	if (!stack_a || !stack_b || stack_length(*stack_a) < 2)
 		return ;
-	window = (sqrt_approx(stack_length(*stack_a)) * 13) / 10;
-	if (window < 1)
-		window = 1;
-	while (*stack_a)
+	max_bits = get_max_bits(stack_length(*stack_a));
+	bit = 0;
+	while (bit < max_bits)
 	{
-		if ((*stack_a)->content <= index)
-		{
-			extra_complex_sort(stack_a, stack_b, ops_head);
-			index++;
-		}
-		else if ((*stack_a)->content <= index + window)
-		{
-			pb(stack_a, stack_b, ops_head);
-			index++;
-		}
-		else
-			ra(stack_a, ops_head);
+		process_bit(stack_a, stack_b, ops_head, bit);
+		bit++;
 	}
-	pass_sb(stack_a, stack_b, ops_head);
 }

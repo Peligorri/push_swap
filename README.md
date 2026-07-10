@@ -22,6 +22,31 @@ To sort the stack, we were only allowed to use the following operations:
 - **rrb (reverse rotate b):** Rotates stack_b downwards by one position, moving the last element to the top of the stack.
 - **rrr:** Performs **rra** and **rrb** simultaneously.
 
+### Sorting Algorithms
+#### Simple Algorithm (O(n²))
+
+The simple strategy is based on repeated minimum extraction, an adaptation of the Selection Sort algorithm. \
+
+The algorithm repeatedly finds the smallest value in stack_a, rotates the stack until that value reaches the top, and pushes it to stack_b. Once all elements have been moved, they are pushed back to stack_a, resulting in a sorted stack. \
+
+This approach is easy to understand and works well for small inputs, although it becomes inefficient as the number of elements grows.
+
+#### Medium Algorithm (O(n√n))
+
+The medium strategy uses a chunk-based sorting algorithm. \
+
+After normalizing the input values, the algorithm divides them into value ranges (chunks). Elements belonging to the current chunk are pushed from stack_a to stack_b, while the remaining elements are rotated until they belong to the active range. Once all elements have been moved to stack_b, the largest values are moved back to stack_a in descending order, producing an ascending sequence. \
+
+Processing the stack by ranges significantly reduces the number of operations compared to the simple algorithm.
+
+#### Complex Algorithm (O(n log n))
+
+The complex strategy uses a Radix Sort adapted to the two-stack constraints of the project. \
+
+After normalizing the values to consecutive indices, the algorithm processes the binary representation of each value one bit at a time. For each bit position, elements with a 0 are pushed to stack_b, while elements with a 1 remain in stack_a through rotations. After each pass, all elements are moved back to stack_a. Repeating this process for every bit produces a fully sorted stack. \
+
+This approach offers a time complexity of O(n log n) and scales efficiently for large datasets.
+
 ### Project Structure
 
 The project is divided into small source files, each with a specific responsibility. This organization improves readability, simplifies maintenance, and ensures compliance with the 42 Norminette.
@@ -110,6 +135,7 @@ We used AI as a tool to help us replace the Molinette and to assist us during th
 - Reorganized the project structure and refactored the codebase.
 - Ensured full compliance with the 42 Norminette.
 - Wrote the initial version of the README.
+- Reviewed and corrected the complex sorting algorithm (Radix).
 
 ### molariou
 - Implemented the simple sorting algorithm.
