@@ -31,12 +31,17 @@ static void	run_strategy(t_flags flags, t_program *program)
 static void	init_program(int argc, char **argv,
 	t_flags *flags, t_program *program)
 {
+	char	**expanded;
+
 	*flags = parse_flags(argc, argv, &program->start_index);
-	program->array_len = argc - program->start_index;
+	expanded = expand_arguments(argv, program->start_index, &program->array_len);
+	if (!expanded)
+		error_output();
 	if (program->array_len < 1)
 		exit(0);
-	program->array_a = transform_argv(&argv[program->start_index],
+	program->array_a = transform_argv(expanded,
 			&program->array_len);
+	free_split(expanded);
 	if (!program->array_a)
 		error_output();
 	if (search_duplicates(program->array_a, program->array_len))

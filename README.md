@@ -57,7 +57,7 @@ The project is divided into small source files, each with a specific responsibil
 | **parser.c**          | `parse_flags()`, `is_known_flag()`, `apply_flag()`, `transform_argv()`, `validate_integer_range()`           |
 | **validation.c**      | `search_duplicates()`, `stack_a_is_correct()`, `error_output()`                                              |
 | **libft_utils.c**     | `ft_strlen()`, `ft_atoi()`, `ft_strcmp()`, `ft_putnbr_fd()`, `ft_putstr_fd()`                                |
-| **libft_utils2.c**    | `search_symbol()`                                                                                            |
+| **libft_utils2.c**    | `search_symbol()`, `ft_strdup`                                                                               |
 | **operation_list.c**  | `create_op_node()`, `record_operation()`, `print_operations()`, `free_operations()`, `count_operations()`    |
 | **operation_utils.c** | `total_operations()`                                                                                         |
 | **swap_push.c**       | `sa()`, `sb()`, `ss()`, `pa()`, `pb()`                                                                       |
@@ -70,6 +70,7 @@ The project is divided into small source files, each with a specific responsibil
 | **stack_utils.c**     | `free_list()`, `is_sorted()`, `stack_length()`, `find_position()`, `find_min_value()`                        |
 | **stack_utils2.c**    | `find_max_value()`, `chunk_size()`, `sqrt_approx()`, `ft_array_to_list()`, `calculate_disorder_percentage()` |
 | **benchmark.c**       | `benchmark_output()`, `strategy_name()`, `complexity_name()`, `print_percent()`, `extra_benchmark()`         |
+| **ft_split.c**        | `count_words()`, `word_dup()`, `free_all()`, `fill_words()`, `ft_split()`                                    |
 
 ## Instructions
 

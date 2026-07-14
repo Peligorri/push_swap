@@ -115,5 +115,9 @@ void		sort_four_five(t_list **stack_a, t_list **stack_b, int length,
 void		rotate_min_to_top(t_list **stack_a, int length,
 				t_op_node **operations);
 int			search_symbol(const char *str, int *neg);
+char        **expand_arguments(char **argv, int start, int *len);
+void        free_split(char **split);
+char		*ft_strdup(const char *s);
+char		**ft_split(char const *s, char c);
 
 #endif

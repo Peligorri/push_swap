@@ -32,7 +32,9 @@ SRCS			= push_swap.c \
 				normalization.c \
 				stack_utils.c \
 				stack_utils2.c \
-				benchmark.c
+				benchmark.c \
+				fix_arguments.c \
+				ft_split.c
 
 # Object files
 OBJS			= $(SRCS:.c=.o)
