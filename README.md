@@ -71,6 +71,7 @@ The project is divided into small source files, each with a specific responsibil
 | **stack_utils2.c**    | `find_max_value()`, `chunk_size()`, `sqrt_approx()`, `ft_array_to_list()`, `calculate_disorder_percentage()` |
 | **benchmark.c**       | `benchmark_output()`, `strategy_name()`, `complexity_name()`, `print_percent()`, `extra_benchmark()`         |
 | **ft_split.c**        | `count_words()`, `word_dup()`, `free_all()`, `fill_words()`, `ft_split()`                                    |
+| **fix_arguments.c**   | `count_words()`, `copy_split()`, `expand_arguments()`, `free_split()`                                        |
 
 ## Instructions
 
